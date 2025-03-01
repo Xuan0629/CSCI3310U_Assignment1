@@ -10,11 +10,14 @@ int main() {
     // Start measuring time
     clock_t start = clock();
 
+    // Compute sum of all numbers (same as Thread 1)
     for (uint64_t i = 1; i <= n; i++) {
         sum_all += i;
-        if (i % 2 == 0) {
-            sum_even += i;
-        }
+    }
+
+    // Compute sum of even numbers (same as Thread 2)
+    for (uint64_t i = 2; i <= n; i += 2) {
+        sum_even += i;
     }
 
     // Stop measuring time
