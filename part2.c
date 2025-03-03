@@ -4,10 +4,12 @@
 #include <stdint.h>
 #include <sys/time.h>
 
-int main() {
+int main(int argc, char* argv[]) {
     unsigned long long n = 1000000000; // 1 billion
     unsigned long long sum_all = 0, sum_even = 0;
-
+    if (argc >= 2) {
+        n = strtoull(argv[1], NULL, 10);
+    }
     // Start timers
     struct timeval start, end;
     gettimeofday(&start, NULL);

@@ -35,9 +35,13 @@ void* calculate_sum_even(void* arg) {
     pthread_exit(NULL);
 }
 
-int main() {
+int main(int argc, char* argv[]) {
     uint64_t n = 1000000000; // 1 billion
     pthread_t thread1, thread2;
+
+    if (argc >= 2) {
+        n = strtoull(argv[1], NULL, 10);
+    }
 
     // Start timers
     struct timeval start, end;
