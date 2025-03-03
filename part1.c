@@ -15,6 +15,8 @@ unsigned long long sum_even = 0;
 
 // Function for Thread 1 (Sum of all numbers)
 void* calculate_sum_all(void* arg) {
+    pthread_t tid = pthread_self();
+    printf("Child Thread 1 ID: %lu\n", (unsigned long)tid);
     unsigned long long n = *(unsigned long long*)arg;
     unsigned long long sum = 0;
     for (unsigned long long i = 1; i <= n; i++) {
@@ -26,6 +28,9 @@ void* calculate_sum_all(void* arg) {
 
 // Function for Thread 2 (Sum of even numbers)
 void* calculate_sum_even(void* arg) {
+    pthread_t tid = pthread_self();
+    printf("Child Thread 2 ID: %lu\n", (unsigned long)tid);
+
     unsigned long long n = *(unsigned long long*)arg;
     unsigned long long sum = 0;
     for (unsigned long long i = 2; i <= n; i += 2) {
@@ -36,7 +41,7 @@ void* calculate_sum_even(void* arg) {
 }
 
 int main(int argc, char* argv[]) {
-    uint64_t n = 1000000000; // 1 billion
+    unsigned long long n = 1000000000; // 1 billion
     pthread_t thread1, thread2;
 
     if (argc >= 2) {
@@ -46,6 +51,9 @@ int main(int argc, char* argv[]) {
     // Start timers
     struct timeval start, end;
     gettimeofday(&start, NULL);
+
+    // Display Parent/Main Thread ID
+    printf("Parent Thread ID: %lu\n", (unsigned long)pthread_self());
 
     // Create threads
     pthread_create(&thread1, NULL, calculate_sum_all, &n);
@@ -63,8 +71,8 @@ int main(int argc, char* argv[]) {
                               start.tv_usec)) * 1e-6;
 
     // Display results
-    printf("Sum of all numbers (1 to %lu): %lu\n", n, sum_all);
-    printf("Sum of even numbers (1 to %lu): %lu\n", n, sum_even);
+    printf("Sum of all numbers (1 to %llu): %llu\n", n, sum_all);
+    printf("Sum of even numbers (1 to %llu): %llu\n", n, sum_even);
     printf("Ratio (Sum All / Sum Even): %.6f\n", (double)sum_all / sum_even);
     printf("Execution Time: %.2f seconds\n", time_taken);
 
