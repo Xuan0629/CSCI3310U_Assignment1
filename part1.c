@@ -1,3 +1,6 @@
+// References:
+// - https://www.geeksforgeeks.org/measure-execution-time-with-high-precision-in-c-c/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -34,9 +37,10 @@ int main() {
     uint64_t n = 1000000000; // 1 billion
     pthread_t thread1, thread2;
 
+    // start timers
+    time_t start, end;
     // Start measuring time
-    clock_t start = clock();
-
+    time(&start);
     // Create threads
     pthread_create(&thread1, NULL, calculate_sum_all, &n);
     pthread_create(&thread2, NULL, calculate_sum_even, &n);
@@ -46,8 +50,8 @@ int main() {
     pthread_join(thread2, NULL);
 
     // Stop measuring time
-    clock_t end = clock();
-    double time_taken = (double)(end - start) / CLOCKS_PER_SEC;
+    time(&end);
+    double time_taken = (double)(end - start);
 
     // Display results
     printf("Sum of all numbers (1 to %lu): %lu\n", n, sum_all);
