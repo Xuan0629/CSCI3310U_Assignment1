@@ -5,19 +5,19 @@
 #include <sys/time.h>
 
 int main() {
-    uint64_t n = 1000000000; // 1 billion
-    uint64_t sum_all = 0, sum_even = 0;
+    unsigned long long n = 1000000000; // 1 billion
+    unsigned long long sum_all = 0, sum_even = 0;
 
     // Start timers
     struct timeval start, end;
     gettimeofday(&start, NULL);
     // Compute sum of all numbers (same as Thread 1)
-    for (uint64_t i = 1; i <= n; i++) {
+    for (unsigned long long i = 1; i <= n; i++) {
         sum_all += i;
     }
 
     // Compute sum of even numbers (same as Thread 2)
-    for (uint64_t i = 2; i <= n; i += 2) {
+    for (unsigned long long i = 2; i <= n; i += 2) {
         sum_even += i;
     }
 
@@ -29,8 +29,8 @@ int main() {
                               start.tv_usec)) * 1e-6;
 
     // Display results
-    printf("Sum of all numbers (1 to %lu): %lu\n", n, sum_all);
-    printf("Sum of even numbers (1 to %lu): %lu\n", n, sum_even);
+    printf("Sum of all numbers (1 to %llu): %llu\n", n, sum_all);
+    printf("Sum of even numbers (1 to %llu): %llu\n", n, sum_even);
     printf("Ratio (Sum All / Sum Even): %.6f\n", (double)sum_all / sum_even);
     printf("Execution Time: %.2f seconds\n", time_taken);
 
